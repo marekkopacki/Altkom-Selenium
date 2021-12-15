@@ -16,19 +16,30 @@ namespace SauceDemo.Tests
         private readonly IWebDriver driver;
 
         private const string url = "https://www.saucedemo.com/";
+
+        private LoginPage loginPage;
+        private ProductPage productPage;
+
         public LoginPageTests()
         {
             driver = new ChromeDriver();
 
             driver.Navigate().GoToUrl(url);
         }
+        [TestInitialize]
+        public void Setup()
+        {
+            //Arrange
+            loginPage = new LoginPage(driver);
+            productPage = new ProductPage(driver);
+        }
 
         [TestMethod]
         public void Login_WithValidUsernameAndPassword_ShouldTitleProductPageDisplayed()
         {
             // Arrange
-            LoginPage loginPage = new LoginPage(driver);
-            ProductPage productPage = new ProductPage(driver);
+            /*LoginPage loginPage = new LoginPage(driver);
+            ProductPage productPage = new ProductPage(driver);*/
 
             // Act
             loginPage.Login("standard_user", "secret_sauce");
@@ -42,7 +53,7 @@ namespace SauceDemo.Tests
         public void Login_LockedOutUser_ShouldErrorMassagesDisplayed()
         {
             //Arrange
-            LoginPage loginPage = new LoginPage(driver);
+            /*LoginPage loginPage = new LoginPage(driver);*/
 
             //Act
             loginPage.Login("locked_out_user", "secret_sauce");
